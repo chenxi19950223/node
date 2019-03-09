@@ -1,0 +1,47 @@
+<div class="col-md-4">
+    <% if(usersInfo._id){ %>
+        <div class="col-md-12" id="regbox">
+            <h4 class="bottom-border"></h4>
+            <span><%= usersInfo.username %></span>
+            <% if(usersInfo.isAdmin === true){ %>
+                <p style="font-size: 12px">
+                    <em style="font-style: normal; ">你好，你是管理员，</em>
+                    <a href="admin/login" target="_blank" style=" margin-left:-5px;">你可以点击这里进入管理</a>
+                </p>
+                <a id="logout" href="javascript:;">退出</a>
+            <% }else { %>
+                <p style="font-size: 12px">
+                    <em style="font-style: normal; ">你好,欢迎登录！！！</em>
+                </p>
+                <a id="logout" href="javascript:;">退出</a>
+            <% } %>
+        </div>
+    <% }else{ %>
+        <div class="col-md-12" id="loginBox">
+            <h4 class="bottom-border">登录</h4>
+            <form action="">
+                用户名：<input type="text" id="users" name="username" placeholder="请输入用户名">
+                密&nbsp&nbsp&nbsp码：<input type="password" id="passs" name="password" placeholder="请输入密码">
+                <button type="button" id="login" class="btn btn-warning">登录</button>
+            </form>
+            <p style="float: right">还没注册？<a href="javascript:;">马上注册</a></p>
+        </div>
+
+        <div class="col-md-12" id="regBox" style="display: none;">
+            <h4 class="bottom-border">注册</h4>
+            <form action="">
+                用户名：<input type="text" name="username" id="user" placeholder="请输入用户名">
+                密&nbsp&nbsp&nbsp码：<input type="password" id="pass" name="password" placeholder="请输入密码">
+                确&nbsp&nbsp&nbsp认：<input type="password" id="cpass" name="cpassword" placeholder="请输入密码">
+                <button type="button" class="btn btn-warning" id="reg">注册</button>
+            </form>
+            <p style="float: right">已有账号？<a href="javascript:;">马上登录</a></p>
+        </div>
+    <% } %>
+    <div class="col-md-12">
+        <h4 class="bottom-border">社区</h4>
+        <a href="javascript:;">广州本田</a>
+        <a href="javascript:;">广州本田</a>
+    </div>
+
+</div>

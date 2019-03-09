@@ -1,0 +1,31 @@
+<% include top.ejs %>
+<div class="container">
+    <table class="table table-hover" style="margin: 0 auto">
+        <tr>
+            <th>username</th>
+            <th>password</th>
+            <th>ID</th>
+            <th>admin</th>
+        </tr>
+        <% for(i = 0; i < xc.length; i++){ %>
+        <tr>
+            <td><%= xc[i].username %></td>
+            <td><%= xc[i].password %></td>
+            <td><%= xc[i]._id %></td>
+            <td><%= xc[i].isAdmin %></td>
+        </tr>
+        <% } %>
+    </table>
+    <nav aria-label="...">
+        <ul class="pager">
+            <li><a href="/admin/login?page=<%=page-1%>">上一页</a></li>
+            <li>一共<strong><%=count%></strong>条 每页<%=limit%>条 <%=page%>/<%=pages%></li>
+            <%if(page===pages){%>
+                <li><a href="javascript:;" >下一页</a></li>
+            <%}else {%>
+                <li><a href="/admin/login?page=<%=page+1%>">下一页</a></li>
+            <%}%>
+        </ul>
+    </nav>
+</div>
+<% include bottom.ejs %>

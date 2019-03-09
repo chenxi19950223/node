@@ -1,0 +1,113 @@
+<% include top.ejs %>
+<div class="container">
+    <table class="table table-bordered table-hover" style="text-align: center">
+        <tr>
+            <td>id</td>
+            <td>标题</td>
+            <td>分类</td>
+            <td>时间</td>
+            <td>评论量</td>
+            <td>阅读量</td>
+            <td>
+                <a href="javascript:;">操作</a>
+            </td>
+        </tr>
+        <% for(i = 0; i < name.length; i++){ %>
+            <tr class="box-cx">
+                <td><%= name[i]._id %></td>
+                <td><%= name[i].title %></td>
+                <td><%= name[i].names %></td>
+                <td><%= name[i].current %></td>
+                <td><%= name[i].comments.length %></td>
+                <td><%= name[i].reading %></td>
+                <input type="hidden" value="<%=name[i].content%>">
+                <td>
+                    <a type="button" class="btn " acc="<%=name[i]._id%>" data-toggle="modal" data-target="#exampleModal"
+                       data-whatever="@getbootstrap">修改</a>|
+                    <a id="<%= name[i]._id %>">删除<%= i %></a>
+                </td>
+            </tr>
+        <% } %>
+        <div class="modal fade dianji" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">文章修改</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">标题</label>
+                                <input type="text" class="form-control" id="title" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">简介</label>
+                                <input type="text" class="form-control" id="abstract">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">内容</label>
+                                <textarea id="content" class="form-control" rows="3" style="resize: none"></textarea>
+                            </div>
+                            <select class="form-control" id="op">
+                                <%for(var i=0 ;i<data.length; i++){%>
+                                <option value="<%=data[i]._id%>" dataName=""><%=data[i].name%></option>
+                                <%}%>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"  class="btn btn-primary" id="edit">确认修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $('.box-cx').parent().find('a:nth-child(1)').on('click',function () {
+                console.log(ooooo)
+                var id=$(this).attr('acc')
+                $('#edit').on('click',function () {
+                    var title=$('#title').val();
+                    var abstract=$('#abstract').val();
+                    var content=$('#content').val();
+                    var op=$("#op").find("option:selected").text();
+                    var opv=$("#op option:selected").val();
+                    $.ajax({
+                        type:'post',
+                        url:'/admin/article/up',
+                        data:{
+                            id:id,
+                            title:title,
+                            abstract:abstract,
+                            content:content,
+                            op:op,
+                            opv:opv
+                        },
+                        success:function (res) {
+                        }
+                    })
+                })
+            })
+        </script>
+    </table>
+</div>
+<script>
+    $('.box-cx').parent().find('a:nth-child(2)').on('click', function () {
+        var id = $(this).parent().find('a:nth-child(2)').attr('id')
+        console.log(id)
+        $.ajax({
+            type: 'get',
+            url: '/admin/article-da',
+            data: {
+                id: id
+            },
+            success: function (res) {
+                if (res.code === 3) {
+                    window.location.reload()
+                }
+            }
+        })
+    });
+</script>
+<% include bottom.ejs %>

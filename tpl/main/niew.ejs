@@ -1,0 +1,42 @@
+<% include top.ejs %>
+<div class="container">
+    <div class="row con">
+        <div class="col-md-7">
+
+            <div class="col-md-12">
+                <h2><%= info.title %></h2>
+                <h4>作者：
+                    <span> admin</span>
+                    -时间
+                    <span><%= info.current.toLocaleString() %></span>
+                    阅读
+                    <span><%= info.reading %></span>
+                    -评论
+                    <span><%= info.comments.length %></span>
+                </h4>
+                <p><%= info.content %></p>
+                <textarea class="form-control" rows="3" style="resize: none"></textarea>
+                <a href="javascript:;" style="display: block">发送</a>
+                <div>
+                    <b style="width: 50%; display: block;float: left">是的法规</b>
+                    <em style="width: 20% ;display: block; float: left; text-align: right">电饭锅</em>
+                    <span style="display: block; width: 15%;float: left">sdfgh</span>
+                    <span style="display: block; width: 15%;float: left">sdfgh</span>
+                    <i style="display: block; width: 100%">第三个粉红色</i>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li><a href="javascript:;">上一页</a></li>
+                        <li><a href="javascript:;"><b>1/2</b></a></li>
+                        <li><a href="javascript:;">下一页</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+        <% include right.ejs %>
+    </div>
+</div>
+<% include bottom.ejs %>

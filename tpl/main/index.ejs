@@ -1,0 +1,39 @@
+<% include top.ejs %>
+<div class="container">
+    <div class="row con">
+        <div class="col-md-7">
+            <% for(var i = 0;i < str.length; i++){ %>
+                <div class="col-md-12">
+                    <h2><%= str[i].title %></h2>
+                    <h4>作者：
+                        <span> admin</span>
+                        -时间
+                        <span><%= str[i].current %></span>
+                        阅读
+                        <span><%= str[i].reading %></span>
+                        -评论
+                        <span><%= str[i].comments.length %></span>
+                        <input type="hidden" value="<%= str[i]._id %>">
+                    </h4>
+                    <h3><%= str[i].content %></h3>
+                    <a href="/inoe?id=<%= str[i]._id %>" class="btn btn-warning dianji">阅读全文</a>
+                </div>
+            <% } %>
+            <div class="col-md-12">
+                <% if(page === 1){ %>
+                    <div class="col-md-3"><a href="javascript:;">没有上一页了</a></div>
+                <% }else { %>
+                    <div class="col-md-3"><a class="zuo" href="/?page=<%= page - 1 %>">上一页</a></div>
+                <% } %>
+                <div class="col-md-6" style="text-align: center"><%= page %>/<%= pages %></div>
+                <% if(page === pages){ %>
+                    <div class="col-md-3"><a href="javascript:;">没有下一页了</a></div>
+                <% }else { %>
+                    <div class="col-md-3"><a class="you" href="/?page=<%= page + 1 %>">下一页</a></div>
+                <% } %>
+            </div>
+        </div>
+        <% include right.ejs %>
+    </div>
+</div>
+<% include bottom.ejs %>

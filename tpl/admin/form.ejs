@@ -1,0 +1,40 @@
+<%include top.ejs%>
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="exampleInputPassword1">新增分类</label>
+            <input type="text" class="form-control" id="txt" value="">
+        </div>
+        <p class="bg-danger" style="display: none;">内容不能为空</p>
+        <a class="btn btn-default" id="btn">提交</a>
+    </form>
+</div>
+<script>
+    $(function () {
+        $('#btn').on('click',function () {
+            if ($('#txt').val()===''){
+                $('.bg-danger').fadeIn().fadeOut();
+            }else {
+                $.ajax({
+                    type:'post',
+                    url:'/admin/form',
+                    data:{
+                        name:$('#txt').val()
+                    },
+                    success:function (res) {
+                        console.log(res)
+                        if (res.code){
+                            $('#txt').val('分类信息添加失败')
+                        }else {
+                            $('#txt').val('分类信息添加成功')
+                        }
+                    },
+                    error:function (error) {
+                        
+                    }
+                })
+            }
+        })
+    })
+</script>
+<%include bottom.ejs%>

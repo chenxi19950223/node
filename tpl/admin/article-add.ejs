@@ -1,0 +1,57 @@
+<% include top.ejs %>
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">文章标题</label>
+            <input type="email" class="form-control" id="title">
+        </div>
+        <select class="form-control" id="op">
+            <%for(var i=0;i<list.length;i++){%>
+                <option value="<%=list[i]._id%>" dataName="<%=list[i].name%>"><%=list[i].name%></option>
+            <%}%>
+        </select>
+        <div class="form-group">
+            <label for="exampleInputPassword1">文章简介</label>
+            <input class="form-control" id="tion" >
+        </div>
+        <textarea class="form-control" rows="3" style="resize: none" id="con"></textarea>
+
+        <a  class="btn btn-default" id="sub">Submit</a>
+    </form>
+</div>
+<script>
+    $('#sub').on('click',function () {
+        var title=$('#title').val();
+        var tion=$('#tion').val();
+        var con=$('#con').val();
+        var op=$('#op').val();
+        var names=$('#op').find('option:selected').attr('dataName')
+        console.log(names)
+        if (title===''){
+            $('#title').attr('placeholder','标题不能为空').fadeIn().fadeOut().fadeIn();
+        }else if (tion===''){
+            $('#tion').attr('placeholder','简介不能为空').fadeIn().fadeOut().fadeIn();
+        } else if (con===''){
+            $('#con').attr('placeholder','文章不能为空').fadeIn().fadeOut().fadeIn();
+        }else {
+            $.ajax({
+                type:'post',
+                url:'/admin/article-add',
+                data:{
+                    title:title,
+                    tion:tion,
+                    con:con,
+                    op:op,
+                    names:names
+                },
+                sccess:function (res) {
+                    console.log(res)
+                },
+                error:function (err) {
+                    console.log(err)
+                }
+            })
+        }
+    })
+</script>
+<% include bottom.ejs %>
