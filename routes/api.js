@@ -127,5 +127,33 @@ reouter.get('/article/ione',function (req,res) {
         res.send(data);
         res.end()
     })
-})
+});
+
+//评论
+reouter.post('/msg/tj',function (req,res) {
+    var id=req.body.id;
+    var con=req.body.con;
+    var user=req.body.user;
+    var tt=req.body.tt
+   article.findOne({_id:id}).then(function (info) {
+       info.comments.push({
+           user:user,
+           con:con,
+           data:new Date()
+       });
+       return info.save();
+   }).then(function (infouser) {
+       res.send(infouser.comments);
+       res.end()
+   })
+});
+reouter.get('/msg',function (req,res) {
+    var id=req.query.id;
+    console.log(id);
+    article.findOne({_id:id}).then(function (info) {
+        res.send(info.comments);
+        res.end()
+    })
+});
+
 module.exports = reouter;

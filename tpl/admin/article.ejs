@@ -20,7 +20,8 @@
                 <td><%= name[i].current %></td>
                 <td><%= name[i].comments.length %></td>
                 <td><%= name[i].reading %></td>
-                <input type="hidden" value="<%=name[i].content%>">
+                <input type="hidden" class="con-xiu" value="<%=name[i].content%>">
+                <input type="hidden" class="abs-xiu" value="<%=name[i].abstract%>">
                 <td>
                     <a type="button" class="btn " acc="<%=name[i]._id%>" data-toggle="modal" data-target="#exampleModal"
                        data-whatever="@getbootstrap">修改</a>|
@@ -59,14 +60,22 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button"  class="btn btn-primary" id="edit">确认修改</button>
+                        <!--<button type="button"  class="btn btn-primary" id="adit">确认修改置顶</button>-->
                     </div>
                 </div>
             </div>
         </div>
         <script>
             $('.box-cx').parent().find('a:nth-child(1)').on('click',function () {
-                console.log(ooooo)
-                var id=$(this).attr('acc')
+                var con=$(this).parent().parent().find('.con-xiu').val()
+                var abs=$(this).parent().parent().find('.abs-xiu').val()
+                var com=$(this).parent().parent().find('.com-xiu').val()
+                var title=$(this).parent().parent().find('td:nth-child(2)').text()
+                var id=$(this).attr('acc');
+                $('#title').val(title);
+                $('#abstract').val(abs);
+                $('#content').val(con);
+                //文章修改
                 $('#edit').on('click',function () {
                     var title=$('#title').val();
                     var abstract=$('#abstract').val();
@@ -82,12 +91,39 @@
                             abstract:abstract,
                             content:content,
                             op:op,
-                            opv:opv
+                            opv:opv,
                         },
                         success:function (res) {
                         }
                     })
-                })
+                });
+                //文章修改置顶
+                // $('#adit').on('click',function () {
+                //     var title=$('#title').val();
+                //     var abstract=$('#abstract').val();
+                //     var content=$('#content').val();
+                //     var op=$("#op").find("option:selected").text();
+                //     var opv=$("#op option:selected").val();
+                //     $.ajax({
+                //         type:'post',
+                //         url:'/admin/article/updow',
+                //         data:{
+                //             id:id,
+                //             title:title,
+                //             abstract:abstract,
+                //             content:content,
+                //             op:op,
+                //             opv:opv,
+                //             com:com
+                //         },
+                //         success:function (res) {
+                //
+                //         },
+                //         error:function (err) {
+                //             console.log(err)
+                //         }
+                //     })
+                // })
             })
         </script>
     </table>

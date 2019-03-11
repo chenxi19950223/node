@@ -185,4 +185,30 @@ reouter.post('/article/up', function (req, res) {
 
     })
 });
+
+//文章修改置顶
+// reouter.post('/article/updow',function (req,res) {
+//     var id = req.body.id;
+//     var title=req.body.title;
+//     var abstract=req.body.abstract;
+//     var content=req.body.content;
+//     var op=req.body.op;
+//     var opv=req.body.opv;
+//     var com=req.body.com;
+//     console.log(id);
+//     article.remove({_id: id}).then(function (info) {
+//         new article({
+//             title: title,
+//             abstract: abstract,
+//             content: content,
+//             class: opv,
+//             names: op,
+//             comments:com
+//         }).save().then(function (info) {
+//             console.log(info);
+//             res.end()
+//         })
+//     })
+//
+// });
 module.exports = reouter;

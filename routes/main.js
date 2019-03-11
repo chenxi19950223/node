@@ -1,5 +1,5 @@
 var express = require('express');
-``
+
 var reouter = express.Router();
 
 var article = require('../models/article');
@@ -12,6 +12,7 @@ reouter.get('/', function (req, res) {
     var page = Number(req.query.page) || 1;
     if (id){
         article.count({class:id}).then(function (count) {
+            if(count===0){count=1}
             var limit = 4;
             var pages = Math.ceil(count / limit);
             var a = (page - 1) * limit;
@@ -31,6 +32,7 @@ reouter.get('/', function (req, res) {
         });
     }else {
         article.count().then(function (count) {
+            if(count===0){count=1}
             var limit = 4;
             var pages = Math.ceil(count / limit);
             var a = (page - 1) * limit;
@@ -45,6 +47,7 @@ reouter.get('/', function (req, res) {
                             limit: limit,
                             page: page,
                             pages: pages,
+                            id:''
                         });
                     });
                 });

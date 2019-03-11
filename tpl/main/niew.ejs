@@ -14,29 +14,85 @@
                     -评论
                     <span><%= info.comments.length %></span>
                 </h4>
+                <input type="hidden" id="oID" value="<%= info._id %>">
                 <p><%= info.content %></p>
-                <textarea class="form-control" rows="3" style="resize: none"></textarea>
-                <a href="javascript:;" style="display: block">发送</a>
-                <div>
-                    <b style="width: 50%; display: block;float: left">是的法规</b>
-                    <em style="width: 20% ;display: block; float: left; text-align: right">电饭锅</em>
-                    <span style="display: block; width: 15%;float: left">sdfgh</span>
-                    <span style="display: block; width: 15%;float: left">sdfgh</span>
-                    <i style="display: block; width: 100%">第三个粉红色</i>
-                </div>
             </div>
             <div class="col-md-12">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li><a href="javascript:;">上一页</a></li>
-                        <li><a href="javascript:;"><b>1/2</b></a></li>
-                        <li><a href="javascript:;">下一页</a></li>
-                    </ul>
-                </nav>
-
+                <% if(usersInfo.isAdmin === true){ %>
+                    <span>欢迎！<strong id="user"><%= usersInfo.username %></strong>您可以发送评论</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="pin">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="abstract">发送</button>
+                    </span>
+                    </div>
+                <% }else { %>
+                    <p style="width: 100%; height: 30px; line-height: 30px; background: sandybrown; text-align: center; padding: 0">
+                        您好请登录后发表留言</p>
+                <% } %>
+                <div class="col-md-12" id="msg-cx" style="padding: 0;margin-top: 10px">
+                </div>
             </div>
+            <!--<div class="col-md-12">-->
+                <!--<nav aria-label="Page navigation">-->
+                    <!--<ul class="pagination">-->
+                        <!--<li><a href="javascript:;">上一页</a></li>-->
+                        <!--<li><a href="javascript:;"><b>1/2</b></a></li>-->
+                        <!--<li><a href="javascript:;">下一页</a></li>-->
+                    <!--</ul>-->
+                <!--</nav>-->
+
+            <!--</div>-->
         </div>
         <% include right.ejs %>
     </div>
 </div>
+<script>
+    var id = $('#oID').val();
+    $('#abstract').on('click', function () {
+        var con = $('#pin').val();
+        var user = $('#user').html();
+        if (con===''){
+            alert('内容不能为空')
+        }else {
+            $.ajax({
+                type: 'post',
+                url: '/api/msg/tj',
+                data: {
+                    con: con,
+                    user: user,
+                    id: id,
+                    tt:new  Date().getTime()
+                },
+                success: function (res) {
+                    $('#msg-cx').html('')
+                    for (var i = 0; i < res.length; i++) {
+                        var oDiv = $('<div class="col-md-12"><p class="p-cx"><span>' + res[i].user + '</span><span>' + res[i].data + '</span></p><p>' + res[i].con + '</p></div>')
+                        $('#msg-cx').prepend(oDiv);
+                    }
+
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+        }
+
+    });
+    $.ajax({
+        type: 'get',
+        url: '/api/msg',
+        data: {
+            id: id,
+        },
+        success: function (res) {
+            console.log(res)
+            for (var i = 0; i < res.length; i++) {
+                var oDiv = $('<div class="col-md-12"><p class="p-cx"><span>' + res[i].user + '</span><span>' + res[i].data + '</span></p><p>' + res[i].con + '</p></div>')
+                $('#msg-cx').prepend(oDiv);
+            }
+
+        },
+    })
+</script>
 <% include bottom.ejs %>

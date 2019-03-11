@@ -8,7 +8,7 @@
                     <h4>作者：
                         <span> admin</span>
                         -时间
-                        <span><%= str[i].current %></span>
+                        <span><%= str[i].current.toLocaleDateString() %></span>
                         阅读
                         <span><%= str[i].reading %></span>
                         -评论
@@ -23,13 +23,21 @@
                 <% if(page === 1){ %>
                     <div class="col-md-3"><a href="javascript:;">没有上一页了</a></div>
                 <% }else { %>
-                    <div class="col-md-3"><a class="zuo" href="/?page=<%= page - 1 %>">上一页</a></div>
+                    <%if(id===''){%>
+                        <div class="col-md-3"><a class="you" href="/?page=<%= page - 1 %>">上一页</a></div>
+                    <%}else {%>
+                    <div class="col-md-3"><a class="you" href="/?js=<%=id%>&page=<%= page - 1 %>">上一页</a></div>
+                    <%}%>
                 <% } %>
                 <div class="col-md-6" style="text-align: center"><%= page %>/<%= pages %></div>
                 <% if(page === pages){ %>
                     <div class="col-md-3"><a href="javascript:;">没有下一页了</a></div>
                 <% }else { %>
-                    <div class="col-md-3"><a class="you" href="/?page=<%= page + 1 %>">下一页</a></div>
+                    <%if(id===''){%>
+                        <div class="col-md-3"><a class="you" href="/?page=<%= page + 1 %>">下一页</a></div>
+                    <%}else {%>
+                        <div class="col-md-3"><a class="you" href="/?js=<%=id%>&page=<%= page + 1 %>">下一页</a></div>
+                    <%}%>
                 <% } %>
             </div>
         </div>
